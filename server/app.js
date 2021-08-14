@@ -1,10 +1,15 @@
 'use strict'
 
 var express = require('express');
+var bodyParser = require('body-parser');
 var productRoutes = require('./API/routes/productRoutes');
 
-
 var app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
+
+
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
