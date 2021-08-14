@@ -1,0 +1,11 @@
+{
+  "name": "wondershop_server",
+  "version": "1.0.0",
+  "description": "Server for WonderShop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Johan Díaz <jgiandh46@gmail.com>",
+  "license": "MIT"
+}
