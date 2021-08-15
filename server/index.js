@@ -1,18 +1,18 @@
-var app = require('./app')
+var app = require('./app');
 var port = 4848;
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
-mongoose.set('useFindAndModify', false)
+mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
-mongoose.connect("mongodb://localhost:27017/wondershop",{useNewUrlParser: true, useUnifiedTopology: true,})
+mongoose.connect('mongodb://localhost:27017/wondershop',{useNewUrlParser: true, useUnifiedTopology: true,})
     .then(() => {
-        console.log("Conexión con la base de datos establecida");
+        console.log('Conexión con la base de datos establecida');
 
         app.listen(port, () => {
-            console.log("Servidor establecido en " + 'http://localhost:'+port+'/API')
+            console.log('Servidor establecido en ' + 'http://localhost:'+port+'/API');
         });
     })
     .catch((error) => {
-        console.log('Ha ocurrido un error '+ error)
+        console.log('Ha ocurrido un error '+ error);
     });

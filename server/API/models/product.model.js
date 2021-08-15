@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -10,6 +10,6 @@ var ProductSchema = Schema({
     features: Object,
 });
 
-module.exports = mongoose.model('Product', ProductSchema)
+module.exports = mongoose.model('Product', ProductSchema);
                                 
                                 
