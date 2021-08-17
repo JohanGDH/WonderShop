@@ -1,11 +1,14 @@
+require('dotenv').config();
+
 var app = require('./app');
-var port = 4848;
+var port = process.env.PORT;
 var mongoose = require('mongoose');
+const connectionString = process.env.MONGO_DB_URI;
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost:27017/wondershop',{useNewUrlParser: true, useUnifiedTopology: true,})
+mongoose.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: true,})
     .then(() => {
         console.log('Conexión con la base de datos establecida');
 

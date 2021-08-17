@@ -88,9 +88,10 @@ const controller = {
         let body = req.body;
 
         function toJSON(string) {
+            console.log(string);
             let stringJSON = string.replace(/['"]+/g, '"');
-            let outSpaces = stringJSON.replace(/ /g,'');
-            return JSON.parse(outSpaces);
+            let json = JSON.parse(stringJSON);
+            return json;
         }
 
         const update = {};
