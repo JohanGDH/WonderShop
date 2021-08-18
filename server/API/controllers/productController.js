@@ -71,7 +71,7 @@ const controller = {
                 message: 'Error al guardar el producto'
             });
 
-            if(!productStored) return res.status(404).send({
+            if(!productStored) return res.status(400).send({
                 message: 'No se envió ningún producto para guardar'
             });
 
@@ -106,7 +106,7 @@ const controller = {
                 message: 'Error al actualizar los datos del producto'
             });
 
-            if(!productUpdated) return res.status(404).send({
+            if(!productUpdated) return res.status(400).send({
                 message: 'El proyecto ha actualizar no existe'
             });
 
@@ -124,7 +124,7 @@ const controller = {
                 message: 'Ha ocurrido un error al borrar el producto'
             });
 
-            if(!productDeleted) return res.status(404).send({
+            if(!productDeleted) return res.status(400).send({
                 message: 'No se puede borrar producto, ya que este no existe'
             });
 

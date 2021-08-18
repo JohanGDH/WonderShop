@@ -9,8 +9,6 @@ const connectionString = NODE_ENV == 'test'
     :MONGO_DB_URI;
 
 mongoose.set('useFindAndModify', false);
-mongoose.Promise = global.Promise;
-
 mongoose.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: true,})
     .then(() => {
         console.log('Conexión con la base de datos establecida');
@@ -22,3 +20,10 @@ mongoose.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: tr
     .catch((error) => {
         console.log('Ha ocurrido un error '+ error);
     });
+
+process.on('uncaughtException', (error) => {
+    console.error(error);
+    mongoose.disconnect();
+});
+
+module.exports = app ;
