@@ -11,19 +11,18 @@ const connectionString = NODE_ENV == 'test'
 mongoose.set('useFindAndModify', false);
 mongoose.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: true,})
     .then(() => {
-        console.log('Conexión con la base de datos establecida');
-
-        app.listen(port, () => {
-            console.log('Servidor establecido en ' + 'http://localhost:'+port+'/API');
-        });
+        console.log('Conexión con la base de datos establecida');        
     })
     .catch((error) => {
         console.log('Ha ocurrido un error '+ error);
     });
-
+const server = app.listen(port, () => {
+    console.log('Servidor establecido en ' + 'http://localhost:' + port + '/API');
+});
+    
 process.on('uncaughtException', (error) => {
     console.error(error);
     mongoose.disconnect();
 });
 
-module.exports = app ;
+module.exports = {app, server} ;

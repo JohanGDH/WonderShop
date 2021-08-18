@@ -6,7 +6,8 @@
   "scripts": {
     "start": "NODE_ENV=production index.js",
     "serve": "NODE_ENV=development nodemon index.js",
-    "test": "NODE_ENV=test jest --verbose --silent --detectOpenHandles",
+    "test": "NODE_ENV=test jest --verbose --silent",
+    "test:watch": "npm run test -- --watch",
     "lint": "eslint . --ext .js"
   },
   "author": "Johan Díaz <jgiandh46@gmail.com>",
