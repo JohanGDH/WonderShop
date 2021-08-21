@@ -1,0 +1,24 @@
+<p>product-list works!</p>
+
+<div>
+    <ng-container *ngFor="let product of products" >
+        <div>
+            <h2>{{product.name}}</h2>
+            <ul>
+                <li>Price: {{product.price}}</li>
+                <li>Stock: {{product.stock}}</li>
+                <ng-container *ngFor="let features of product.features | keyvalue">
+                    <li>
+                        {{features.key | uppercase}}: {{features.value}}
+                    </li>
+                </ng-container>                
+            </ul>
+            <button>Eliminar</button>
+        </div>    
+    
+    </ng-container>
+    
+    
+</div>
+<hr>
+<button routerLink="/admin/create">Crear producto</button>
