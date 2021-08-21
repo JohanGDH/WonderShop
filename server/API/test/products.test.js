@@ -55,6 +55,7 @@ test('A valid product to save', async () => {
     const response = await api.get('/API/products');
     const names = response.body.products.map(product => product.name);
     
+    expect(response.body.products).toHaveLength(initialProducts.length + 1);
     expect(names).toContain(newProduct.name);
 });
 

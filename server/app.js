@@ -2,7 +2,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const productRoutes = require('./API/routes/productRoutes');
+const productRouter = require('./API/routes/productRoutes');
+const userRouter = require();
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/API', productRoutes );
+app.use('/API', productRouter);
+app.use('/API/users/', userRouter);
 
 module.exports = app;
