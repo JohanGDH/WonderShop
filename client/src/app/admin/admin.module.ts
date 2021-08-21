@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { NavComponent } from './nav/nav.component';
@@ -23,6 +24,7 @@ import { ProductService } from '../core/services/productService/product.service.
     CommonModule,
     AdminRoutingModule,
     CoreModule,
+    ReactiveFormsModule
   ],
   providers: [
     ProductService

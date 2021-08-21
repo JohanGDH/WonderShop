@@ -1,7 +1,7 @@
 export interface Product {
   _id: any;
-  name: String;
-  price: Number;
-  stock: Number;
+  name: string;
+  price: number;
+  stock: number;
   features: Object;
 }

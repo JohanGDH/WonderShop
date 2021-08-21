@@ -1,4 +1,4 @@
-<p>product-list works!</p>
+<p>Lista de productos</p>
 
 <div>
     <ng-container *ngFor="let product of products" >
@@ -13,7 +13,12 @@
                     </li>
                 </ng-container>                
             </ul>
-            <button>Eliminar</button>
+            <button (click)="deleteProduct(product.name)">
+                Eliminar
+            </button>
+            <button [routerLink]="['/admin/edit',product.name]">
+              Editar
+            </button>
         </div>    
     
     </ng-container>

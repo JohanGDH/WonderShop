@@ -1,1 +1,45 @@
-<p>product-form works!</p>
+
+<form [formGroup]="form" (ngSubmit)="saveProduct($event)">
+  <h1>Crear Producto:</h1>
+  <p>
+      <label>Nombre:</label><br>
+    <input type="text" formControlName="name">
+  </p>
+  <p>
+      <label>Precio:</label><br>
+    <input type="number" formControlName="price">
+  </p>
+  <p>
+      <label>Stock:</label><br>
+    <input type="number" formControlName="stock">
+  </p>
+  <div formArrayName="features">
+        <ng-container *ngFor="let feature of features.controls; let i = index;">
+            Caracteristicas
+            <div [formGroupName]="i" >
+                <p>
+                    <label>Nombre:</label><br>
+                    <input formControlName="featureName" type="text">
+                </p>
+
+                <p>
+                    <label> Valor:</label><br>
+                    <input formControlName="featureValue" type="text">
+                </p>
+            </div>            
+            <button (click)="removeFeature(i)">Eliminar Caracteristica</button>
+        </ng-container>        
+  </div>
+  
+  <p>
+      <button (click)="addFeature()">
+          + Añadir Caracteristica
+      </button>
+  </p>
+  <p>
+      <button (click)="saveProduct($event)">
+          Crear Producto
+      </button>
+  </p>
+
+</form>

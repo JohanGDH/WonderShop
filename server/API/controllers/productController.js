@@ -53,18 +53,18 @@ const controller = {
         let product = new Product();
         let params = req.body;
 
-        let features = params.features;
+        // let features = params.features;
 
-        function toJSON(string) {
-            let stringJSON = string.replace(/['"]+/g, '"');
-            let outSpaces = stringJSON.replace(/ /g,'');
-            return JSON.parse(outSpaces);
-        }
+        // function toJSON(string) {
+        //     let stringJSON = string.replace(/['"]+/g, '"');
+        //     let outSpaces = stringJSON.replace(/ /g,'');
+        //     return JSON.parse(outSpaces);
+        // }
 
         product.name = params.name;
         product.price = params.price;
         product.stock = params.stock;
-        product.features = toJSON(features) ;
+        product.features = params.features ;
 
         product.save((error, productStored) => {
             if(error) return res.status(500).send({
@@ -87,19 +87,19 @@ const controller = {
         let productName = req.params.name;
         let body = req.body;
 
-        function toJSON(string) {
-            console.log(string);
-            let stringJSON = string.replace(/['"]+/g, '"');
-            let json = JSON.parse(stringJSON);
-            return json;
-        }
+        // function toJSON(string) {
+        //     console.log(string);
+        //     let stringJSON = string.replace(/['"]+/g, '"');
+        //     let json = JSON.parse(stringJSON);
+        //     return json;
+        // }
 
         const update = {};
 
         if(body.name) update.name = body.name;
         if(body.price) update.price = body.price;
         if(body.stock) update.stock = body.stock;
-        if(body.features) update.features = toJSON(body.features);
+        if(body.features) update.features = body.features;
 
         Product.findOneAndUpdate({name: productName}, update, { new: true}, (err, productUpdated) => {
             if(err) return res.status(500).send({
