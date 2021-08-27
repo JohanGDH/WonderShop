@@ -60,7 +60,7 @@ const controller = {
         //     let outSpaces = stringJSON.replace(/ /g,'');
         //     return JSON.parse(outSpaces);
         // }
-
+      
         product.name = params.name;
         product.price = params.price;
         product.stock = params.stock;
@@ -86,14 +86,6 @@ const controller = {
     updateProduct: (req, res) => {
         let productName = req.params.name;
         let body = req.body;
-
-        // function toJSON(string) {
-        //     console.log(string);
-        //     let stringJSON = string.replace(/['"]+/g, '"');
-        //     let json = JSON.parse(stringJSON);
-        //     return json;
-        // }
-
         const update = {};
 
         if(body.name) update.name = body.name;

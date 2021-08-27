@@ -6,17 +6,19 @@
   "scripts": {
     "start": "NODE_ENV=production index.js",
     "serve": "NODE_ENV=development nodemon index.js",
-    "test": "NODE_ENV=test jest --verbose --silent",
+    "test": "NODE_ENV=test PORT=1234 jest --verbose  --maxWorkers=1",
     "test:watch": "npm run test -- --watch",
     "lint": "eslint . --ext .js"
   },
   "author": "Johan Díaz <jgiandh46@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "1.19.0",
     "dotenv": "10.0.0",
     "express": "4.17.1",
-    "mongoose": "5.13.7"
+    "mongoose": "5.13.7",
+    "mongoose-unique-validator": "^2.0.3"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

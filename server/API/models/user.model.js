@@ -1,22 +1,33 @@
 "use strict";
 
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 var Schema = mongoose.Schema;
 
 var UserSchema = Schema({
-    username: String,
-    name: Number,
-    passwordHash: Number,
-    notes: [{
-        type: Schema.Types.ObjectId,
-    }]
+    username: {
+        type: String,
+        unique: true,
+    },
+    name: String,
+    passwordHash: String,
+    products: [
+        {
+            type: String,
+            ref: "Product",
+        },
+    ],
 });
 
 UserSchema.set('toJSON', {
-
     transform: (document, retornedObject) => {
+        retornedObject.id = retornedObject._id;
+        delete retornedObject._id;
+        delete retornedObject.__v;
         delete retornedObject.passwordHash;
     }
 });
 
-module.exports = mongoose.model("User", UserSchema);
+UserSchema.plugin(uniqueValidator);
+
+module.exports = mongoose.model('User', UserSchema);

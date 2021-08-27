@@ -9,7 +9,7 @@ const connectionString = NODE_ENV == 'test'
     :MONGO_DB_URI;
 
 mongoose.set('useFindAndModify', false);
-mongoose.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: true,})
+mongoose.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: true,'useCreateIndex': true})
     .then(() => {
         console.log('Conexión con la base de datos establecida');        
     })

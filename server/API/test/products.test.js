@@ -25,38 +25,40 @@ const initialProducts = [
         },
     },
 ];
+describe('Testing a Product CRUD', () => {
+    test("Products are retorned as JSON", async () => {
+        await api
+            .get("/API/products")
+            .expect(200)
+            .expect("Content-Type", /application\/json/);
+    });
 
-test('Products are retorned as JSON', async () => {
-    await api
-        .get('/API/products')
-        .expect(200)
-        .expect('Content-Type', /application\/json/);
-});
+    test("Products are retorned", async () => {
+        const response = await api.get("/API/products");
+        expect(response.body.products).toHaveLength(initialProducts.length);
+    });
 
-test('Products are retorned', async () => {
-    const response = await api.get('/API/products');
-    expect(response.body.products).toHaveLength(initialProducts.length);
-});
+    test("A valid product to save", async () => {
+        const newProduct = {
+            name: "Redmi Note 8",
+            price: 800,
+            stock: 11,
+            features: { color: "Rojo", ram: "12gb", rom: "256gb" },
+        };
 
-test('A valid product to save', async () => {
-    const newProduct = {
-        name: 'Redmi Note 8',
-        price: 800,
-        stock: 11,
-        features: "{'color': 'Rojo','ram': '12gb','rom': '256gb'}"
-    };
+        await api
+            .post("/API/save")
+            .send(newProduct)
+            .expect(200)
+            .expect("Content-Type", /application\/json/);
 
-    await api
-        .post('/API/save')
-        .send(newProduct)
-        .expect(200)
-        .expect('Content-Type', /application\/json/);
+        const response = await api.get("/API/products");
+        const names = response.body.products.map((product) => product.name);
 
-    const response = await api.get('/API/products');
-    const names = response.body.products.map(product => product.name);
-    
-    expect(response.body.products).toHaveLength(initialProducts.length + 1);
-    expect(names).toContain(newProduct.name);
+        expect(response.body.products).toHaveLength(initialProducts.length + 1);
+        expect(names).toContain(newProduct.name);
+    });
+
 });
 
 beforeEach( async() => { 
@@ -75,3 +77,5 @@ afterAll(() => {
     mongoose.disconnect();
     server.close();
 });
+
+module.exports = api;
