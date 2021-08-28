@@ -25,7 +25,26 @@ const initialProducts = [
         },
     },
 ];
+
+beforeEach(async () => {
+    await Product.deleteMany({});
+
+    const product1 = new Product(initialProducts[0]);
+    await product1.save();
+
+    const product2 = new Product(initialProducts[1]);
+    await product2.save();
+});
+
+afterAll(() => {
+    mongoose.disconnect();
+    server.close();
+});
+
 describe('Testing a Product CRUD', () => {
+
+    
+
     test("Products are retorned as JSON", async () => {
         await api
             .get("/API/products")
@@ -60,22 +79,3 @@ describe('Testing a Product CRUD', () => {
     });
 
 });
-
-beforeEach( async() => { 
-    await Product.deleteMany();
-
-    const product1 = new Product(initialProducts[0]);
-    await product1.save();
-
-    const product2 = new Product(initialProducts[1]);
-    await product2.save();
-});
-
-
-
-afterAll(() => {
-    mongoose.disconnect();
-    server.close();
-});
-
-module.exports = api;

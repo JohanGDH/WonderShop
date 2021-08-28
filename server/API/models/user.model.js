@@ -1,13 +1,13 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
+var uniqueValidator = require("mongoose-unique-validator");
 var Schema = mongoose.Schema;
 
 var UserSchema = Schema({
     username: {
         type: String,
-        unique: true,
+        unique: true
     },
     name: String,
     passwordHash: String,

@@ -67,11 +67,13 @@ const controller = {
             if (error)
                 return res.status(500).send({
                     message: "Error al guardar el usuario",
+                    error: error,
                 });
 
             if (!userStored)
                 return res.status(400).send({
                     message: "No se envió ningún usuario para guardar",
+                    error: error,
                 });
 
             return res.status(200).send({
