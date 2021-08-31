@@ -17,7 +17,7 @@ mongoose.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: tr
         console.log(`Ha ocurrido un error '+ ${error}`);
     });
 const server = app.listen(port, () => {
-    console.log(`Servidor establecido en http://localhost:+${port}+/API`);
+    console.log(`Servidor establecido en http://localhost:${port}/API`);
 });
     
 process.on('uncaughtException', (error) => {

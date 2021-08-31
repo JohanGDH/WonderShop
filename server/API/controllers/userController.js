@@ -10,45 +10,55 @@ const controller = {
 
     listUser: (req, res) => {
         User.find({})
-            .exec((err, users) => {
-                if (err) return res.status(500).send({
-                    message: "Error al listar los productos",
-                });
+          .populate('products',{
+              name: 1,
+              price: 1,
+              stock: 1,
+          })
+          .exec((err, users) => {
+            if (err)
+              return res.status(500).send({
+                message: 'Error al listar los productos',
+              });
 
-                if (!users)
-                    return res.status(404).send({
-                        message: "No hay productos que listar",
-                    });
+            if (!users)
+              return res.status(404).send({
+                message: 'No hay productos que listar',
+              });
 
-                return res.status(200).send({ users });
-            });
+            return res.status(200).send({ users });
+          });
     },
 
-    // getProduct: (req, res) => {
-    //     let productName = req.params.name;
+    getUser: (req, res) => {
+        const UserId = req.params.id;
 
-    //     if (productName == null) {
-    //         return res.status(404).send({
-    //             message: "El nombre especificado no es válido",
-    //         });
-    //     }
+        if (UserId == null) {
+            return res.status(404).send({
+                message: "El nombre especificado no es válido",
+            });
+        }
 
-    //     Product.find({ name: productName }, (err, product) => {
-    //         if (err)
-    //             return res.status(500).send({
-    //                 message: "Error al devolver el producto",
-    //             });
+        User.findById(UserId, (err, user) => {
+          if (err)
+            return res.status(500).send({
+              message: 'Error al devolver el producto',
+            });
 
-    //         if (product.length < 1)
-    //             return res.status(404).send({
-    //                 message: "Producto no encontrado",
-    //             });
+          if (user.length < 1)
+            return res.status(404).send({
+              message: 'Producto no encontrado',
+            });
 
-    //         return res.status(200).send({
-    //             product,
-    //         });
-    //     });
-    // },
+          return res.status(200).send({
+            user,
+          });
+        }).populate('products', {
+          name: 1,
+          price: 1,
+          stock: 1,          
+        });
+    },
 
     saveUser: async (req, res) => {
         const user = new User();
@@ -60,6 +70,7 @@ const controller = {
         user.username = params.username;
         user.name = params.name;
         user.passwordHash = passwordHash;
+        user.products = params.products
 
         user.save((error, userStored) => {
             if (error)
@@ -74,73 +85,61 @@ const controller = {
                     error,
                 });
 
-            return res.status(200).send({
+            return res.status(201).send({
                 usuario: userStored,
                 Estado: "Guardado",
             });
         });
     },
 
-    // updateProduct: (req, res) => {
-    //     let productName = req.params.name;
-    //     let body = req.body;
+    updateUser: async (req, res)  => {
+        const UserId = req.params.id;
+        const {body} = req;
+        const update = {};
+        const passwordHash = await bcrypt.hash(body.password, 10);  
 
-    //     // function toJSON(string) {
-    //     //     console.log(string);
-    //     //     let stringJSON = string.replace(/['"]+/g, '"');
-    //     //     let json = JSON.parse(stringJSON);
-    //     //     return json;
-    //     // }
+        if (body.username) update.username = body.username;
+        if (body.name) update.name = body.name;
+        if (body.password) update.passwordHash = passwordHash;
 
-    //     const update = {};
+        User.findByIdAndUpdate(UserId, update, { new: true }, (err, productUpdated) => {
+                
+            if (err)
+                return res.status(500).send({
+                    message: 'Error al actualizar los datos del usuario',
+                });
 
-    //     if (body.name) update.name = body.name;
-    //     if (body.price) update.price = body.price;
-    //     if (body.stock) update.stock = body.stock;
-    //     if (body.features) update.features = body.features;
+            if (!productUpdated)
+                return res.status(400).send({
+                    message: 'El usuario ha actualizar no existe',
+                });
 
-    //     Product.findOneAndUpdate(
-    //         { name: productName },
-    //         update,
-    //         { new: true },
-    //         (err, productUpdated) => {
-    //             if (err)
-    //                 return res.status(500).send({
-    //                     message: "Error al actualizar los datos del producto",
-    //                 });
+            return res.status(200).send({
+                Usuario: productUpdated,
+                Estado: 'Actualizado',
+            });
+        });
+    },
 
-    //             if (!productUpdated)
-    //                 return res.status(400).send({
-    //                     message: "El proyecto ha actualizar no existe",
-    //                 });
+    deleteUser: (req, res) => {
+        const UserId = req.params.id;
+        User.findByIdAndDelete( UserId, (err, userDeleted) => {
+          if (err)
+            return res.status(500).send({
+              message: 'Ha ocurrido un error al borrar el usuario',
+            });
 
-    //             return res.status(200).send({
-    //                 Producto: productUpdated,
-    //                 Estado: "Actualizado",
-    //             });
-    //         }
-    //     );
-    // },
+          if (!userDeleted)
+            return res.status(400).send({
+              message: 'No se puede borrar usuario, ya que este no existe',
+            });
 
-    // deleteProduct: (req, res) => {
-    //     let productName = req.params.name;
-    //     Product.findOneAndDelete({ name: productName }, (err, productDeleted) => {
-    //         if (err)
-    //             return res.status(500).send({
-    //                 message: "Ha ocurrido un error al borrar el producto",
-    //             });
-
-    //         if (!productDeleted)
-    //             return res.status(400).send({
-    //                 message: "No se puede borrar producto, ya que este no existe",
-    //             });
-
-    //         return res.status(200).send({
-    //             Producto: productDeleted,
-    //             Estado: "Eliminado",
-    //         });
-    //     });
-    // },
+          return res.status(200).send({
+            usuario: userDeleted,
+            Estado: 'Eliminado',
+          });
+        });
+    },
 };
 
 module.exports = controller;

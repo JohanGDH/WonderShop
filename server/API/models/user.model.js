@@ -13,7 +13,7 @@ const UserSchema = Schema({
     passwordHash: String,
     products: [
         {
-            type: String,
+            type: Schema.Types.ObjectId,
             ref: "Product",
         },
     ],
