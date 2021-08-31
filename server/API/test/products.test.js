@@ -2,6 +2,7 @@ const supertest = require('supertest');
 const {app, server}  = require('../../index');
 const Product = require('../models/product.model');
 const mongoose = require('mongoose');
+
 const api = supertest(app);
 
 const initialProducts = [
@@ -42,8 +43,6 @@ afterAll(() => {
 });
 
 describe('Testing a Product CRUD', () => {
-
-    
 
     test("Products are retorned as JSON", async () => {
         await api

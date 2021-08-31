@@ -1,9 +1,8 @@
-'use strict';
+const mongoose = require('mongoose');
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
-var ProductSchema = Schema({
+const ProductSchema = Schema({
     name: String,
     price: Number,
     stock: Number,

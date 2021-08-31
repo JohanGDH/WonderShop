@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const { app, server } = require("../../index");
 const mongoose = require("mongoose");
+
 const api = supertest(app);
 
 describe.only("Creating a new user", () => {
@@ -37,8 +38,7 @@ describe.only("Creating a new user", () => {
         const usersDBAfter = await api.get("/API/users/list");
         const usersAtEnd = usersDBAfter.body.users.map((user) => user);
 
-        expect(usersAtEnd).toHaveLength(usersAtStart.length + 1);
-
+        expect(usersAtEnd).toHaveLength(usersAtStart.length + 1);        
         const usersNames = usersAtEnd.map((u) => u.username);
         expect(usersNames).toContain(newUser1.username);
     });

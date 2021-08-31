@@ -1,13 +1,11 @@
-'use strict';
+
 
 const Product = require('../models/product.model');
 
 const controller = {
-    test: (req, res) => {
-        return res.status(200).send({
+    test: (req, res) => res.status(200).send({
             message: 'Metodo Test'
-        });
-    },
+        }),
 
     listProducts: (req, res) => {
         Product.find({}).sort('+price').exec((err, products) => {
@@ -24,7 +22,7 @@ const controller = {
     },
 
     getProduct: (req, res) => {
-        let productName = req.params.name;
+        const productName = req.params.name;
 
         if(productName == null) {
             return res.status(404).send({
@@ -50,8 +48,8 @@ const controller = {
 
 
     saveProduct: (req, res) => {
-        let product = new Product();
-        let params = req.body;
+        const product = new Product();
+        const params = req.body;
 
         // let features = params.features;
 
@@ -84,8 +82,8 @@ const controller = {
 
 
     updateProduct: (req, res) => {
-        let productName = req.params.name;
-        let body = req.body;
+        const productName = req.params.name;
+        const {body} = req;
         const update = {};
 
         if(body.name) update.name = body.name;
@@ -110,7 +108,7 @@ const controller = {
     },
 
     deleteProduct: (req, res) => {
-        let productName = req.params.name;
+        const productName = req.params.name;
         Product.findOneAndDelete({name: productName}, (err, productDeleted) => {
             if(err) return res.status(500).send({
                 message: 'Ha ocurrido un error al borrar el producto'

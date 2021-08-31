@@ -1,14 +1,12 @@
-"use strict";
+
 
 const User = require("../models/user.model");
 const bcrypt = require('bcrypt');
 
 const controller = {
-    test: (req, res) => {
-        return res.status(200).send({
+    test: (req, res) => res.status(200).send({
             message: "Metodo Test",
-        });
-    },
+        }),
 
     listUser: (req, res) => {
         User.find({})
@@ -53,8 +51,8 @@ const controller = {
     // },
 
     saveUser: async (req, res) => {
-        let user = new User();
-        let params = req.body;
+        const user = new User();
+        const params = req.body;
 
         const saltRounds = 10;
         const passwordHash = await bcrypt.hash(params.password, saltRounds);     
@@ -67,13 +65,13 @@ const controller = {
             if (error)
                 return res.status(500).send({
                     message: "Error al guardar el usuario",
-                    error: error,
+                    error,
                 });
 
             if (!userStored)
                 return res.status(400).send({
                     message: "No se envió ningún usuario para guardar",
-                    error: error,
+                    error,
                 });
 
             return res.status(200).send({
