@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const {Schema} = mongoose;
 
 const ProductSchema = Schema({
-    name: String,
+    name: {
+        type: String,
+        unique: true,
+    },
     price: Number,
     stock: Number,
     features: Object,
@@ -17,5 +21,7 @@ ProductSchema.set("toJSON", {
         delete retornedObject.__v;
     },
 });
+
+ProductSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Product', ProductSchema);

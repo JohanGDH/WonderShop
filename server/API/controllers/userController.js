@@ -5,29 +5,29 @@ const bcrypt = require('bcrypt');
 
 const controller = {
     test: (req, res) => res.status(200).send({
-            message: "Metodo Test",
-        }),
+        message: "Metodo Test",
+    }),
 
     listUser: (req, res) => {
         User.find({})
-          .populate('products',{
-              name: 1,
-              price: 1,
-              stock: 1,
-          })
-          .exec((err, users) => {
-            if (err)
-              return res.status(500).send({
-                message: 'Error al listar los productos',
-              });
+            .populate('products',{
+                name: 1,
+                price: 1,
+                stock: 1,
+            })
+            .exec((err, users) => {
+                if (err)
+                    return res.status(500).send({
+                        message: 'Error al listar los productos',
+                    });
 
-            if (!users)
-              return res.status(404).send({
-                message: 'No hay productos que listar',
-              });
+                if (!users)
+                    return res.status(404).send({
+                        message: 'No hay productos que listar',
+                    });
 
-            return res.status(200).send({ users });
-          });
+                return res.status(200).send({ users });
+            });
     },
 
     getUser: (req, res) => {
@@ -40,23 +40,24 @@ const controller = {
         }
 
         User.findById(UserId, (err, user) => {
-          if (err)
-            return res.status(500).send({
-              message: 'Error al devolver el producto',
-            });
+            if (err)
+                return res.status(500).send({
+                    message: 'Error al devolver el usuario',
+                    err
+                });
 
-          if (user.length < 1)
-            return res.status(404).send({
-              message: 'Producto no encontrado',
-            });
+            if (user.length < 1)
+                return res.status(404).send({
+                    message: 'Producto no encontrado',
+                });
 
-          return res.status(200).send({
-            user,
-          });
+            return res.status(200).send({
+                user,
+            });
         }).populate('products', {
-          name: 1,
-          price: 1,
-          stock: 1,          
+            name: 1,
+            price: 1,
+            stock: 1,          
         });
     },
 
@@ -70,7 +71,7 @@ const controller = {
         user.username = params.username;
         user.name = params.name;
         user.passwordHash = passwordHash;
-        user.products = params.products
+        user.products = params.products;
 
         user.save((error, userStored) => {
             if (error)
@@ -124,20 +125,20 @@ const controller = {
     deleteUser: (req, res) => {
         const UserId = req.params.id;
         User.findByIdAndDelete( UserId, (err, userDeleted) => {
-          if (err)
-            return res.status(500).send({
-              message: 'Ha ocurrido un error al borrar el usuario',
-            });
+            if (err)
+                return res.status(500).send({
+                    message: 'Ha ocurrido un error al borrar el usuario',
+                });
 
-          if (!userDeleted)
-            return res.status(400).send({
-              message: 'No se puede borrar usuario, ya que este no existe',
-            });
+            if (!userDeleted)
+                return res.status(400).send({
+                    message: 'No se puede borrar usuario, ya que este no existe',
+                });
 
-          return res.status(200).send({
-            usuario: userDeleted,
-            Estado: 'Eliminado',
-          });
+            return res.status(200).send({
+                usuario: userDeleted,
+                Estado: 'Eliminado',
+            });
         });
     },
 };

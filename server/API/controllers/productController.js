@@ -1,11 +1,9 @@
-
-
 const Product = require('../models/product.model');
 
 const controller = {
     test: (req, res) => res.status(200).send({
-            message: 'Metodo Test'
-        }),
+        message: 'Metodo Test'
+    }),
 
     listProducts: (req, res) => {
         Product.find({}).sort('+price').exec((err, products) => {
@@ -32,11 +30,12 @@ const controller = {
 
         Product.find({name: productName},(err, product) => {
             if(err) return res.status(500).send({
-                message: 'Error al devolver el producto'
+                message: 'Error al devolver el producto',
+                err
             });
 
-            if(product.length < 1) return res.status(404).send({
-                message: 'Producto no encontrado'
+            if(product.length < 1 || err) return res.status(404).send({
+                message: 'Producto no encontrado',
             });
 
             return res.status(200).send({
@@ -51,14 +50,6 @@ const controller = {
         const product = new Product();
         const params = req.body;
 
-        // let features = params.features;
-
-        // function toJSON(string) {
-        //     let stringJSON = string.replace(/['"]+/g, '"');
-        //     let outSpaces = stringJSON.replace(/ /g,'');
-        //     return JSON.parse(outSpaces);
-        // }
-      
         product.name = params.name;
         product.price = params.price;
         product.stock = params.stock;
@@ -66,11 +57,13 @@ const controller = {
 
         product.save((error, productStored) => {
             if(error) return res.status(500).send({
-                message: 'Error al guardar el producto'
+                message: 'Error al guardar el producto',
+                error
             });
 
             if(!productStored) return res.status(400).send({
-                message: 'No se envió ningún producto para guardar'
+                message: 'No se envió ningún producto para guardar',
+                error,
             });
 
             return res.status(200).send({
