@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Product } from '../../models/product.model';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -32,23 +32,23 @@ export class ProductService {
 
   saveProduct(product: Product) {
     return this.http
-      .post(this.url + '/save', product)
+      .post(this.url + '/products', product)
       .pipe(catchError(this.handleError));
   }
 
   updateProduct(name: string, changes: Partial<Product>) {
     return this.http
-      .put(this.url + `/update/${name}`, changes)
+      .put(this.url + `/products/${name}`, changes)
       .pipe(catchError(this.handleError));
   }
 
   deleteProduct(name: string) {
     return this.http
-      .delete(`${this.url}/delete/${name}`)
+      .delete(`${this.url}/products/${name}`)
       .pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {
-    return throwError('Ups algo salio mal' + error);
+    return throwError('Ups algo salio mal ' + error.name +' '+ error.message);
   }
 }

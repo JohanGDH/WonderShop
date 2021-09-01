@@ -1,0 +1,12 @@
+<form [formGroup]="form" (ngSubmit)="login($event)">
+  <h1>Crear Producto:</h1>
+  <p>
+    <label>Usuario:</label><br>
+    <input type="text" formControlName="username">
+  </p>
+  <p>
+    <label>Constraseña:</label><br>
+    <input type="text" formControlName="password">
+  </p>
+  <button type="submit">Login</button>
+</form>

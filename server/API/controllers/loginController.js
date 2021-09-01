@@ -27,12 +27,11 @@ const controller = {
         const token = jwt.sign(infoForToken, process.env.SECRET_1, { expiresIn: '10h'});
 
         res.status(200).send({
-            message: 'Acceso concedido',
             user: {
                 username: user.username,
                 name: user.name,
             },
-            token
+            token,
         });
     }
 };

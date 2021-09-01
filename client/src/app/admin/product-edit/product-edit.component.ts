@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/core/models/product.model';
-import { ProductService } from '../../core/services/productService/product.service.service';
+import { ProductService } from '../../core/services/productService/product.service';
 
 @Component({
   selector: 'app-product-edit',

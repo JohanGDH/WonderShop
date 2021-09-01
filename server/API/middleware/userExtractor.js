@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (request, response, next) => {
-    
+
     const auth = request.get('authorization');
     let token = '';
 
@@ -9,7 +9,17 @@ module.exports = (request, response, next) => {
         token = auth.substring(7);
     }
 
-    const decodedToken = jwt.verify(token, process.env.SECRET_1);
+    let decodedToken = '';
+    try {
+        decodedToken = jwt.verify(token, process.env.SECRET_1);
+
+    } catch (error) {
+        return response.status(401).send({
+            message: 'Tokén invalido o inexistente',
+            error
+        });
+
+    }
 
     if (!token || !decodedToken.id) {
         return response.status(401).send({

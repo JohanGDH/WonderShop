@@ -9,7 +9,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProductService } from '../core/services/productService/product.service.service';
+import { ProductService } from '../core/services/productService/product.service';
 
 
 @NgModule({
