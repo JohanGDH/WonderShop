@@ -30,25 +30,48 @@ export class ProductService {
       .pipe(catchError(this.handleError));
   }
 
-  saveProduct(product: Product) {
+  saveProduct(product: Product, token: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+
     return this.http
-      .post(this.url + '/products', product)
+      .post(this.url + '/products', product, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  updateProduct(name: string, changes: Partial<Product>) {
+  updateProduct(name: string, changes: Partial<Product>, token: string) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+
     return this.http
-      .put(this.url + `/products/${name}`, changes)
+      .put(this.url + `/products/${name}`, changes, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  deleteProduct(name: string) {
+  deleteProduct(name: string, token: string) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+
     return this.http
-      .delete(`${this.url}/products/${name}`)
+      .delete(`${this.url}/products/${name}`, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {
-    return throwError('Ups algo salio mal ' + error.name +' '+ error.message);
+    return throwError('Ups algo salio mal ' + error.name + ' ' + error.message);
   }
 }

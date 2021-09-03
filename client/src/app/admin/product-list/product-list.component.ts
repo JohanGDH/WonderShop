@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/core/models/product.model';
 import { ProductService } from 'src/app/core/services/productService/product.service';
-
+import { AuthService } from 'src/app/core/services/authService/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +11,10 @@ import { ProductService } from 'src/app/core/services/productService/product.ser
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.fetchProducts();
@@ -24,7 +27,8 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(name: string) {
-    this.productService.deleteProduct(name).subscribe((res) => {
+    let token = this.authService.getToken()
+    this.productService.deleteProduct(name, token).subscribe((res) => {
       console.log(res);
 
       if (res) {

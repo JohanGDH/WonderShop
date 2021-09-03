@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product.model';
+import { AuthService } from 'src/app/core/services/authService/auth.service';
 import { ProductService } from '../../core/services/productService/product.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class ProductFormComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private productService: ProductService,
+        private authService: AuthService,
         private router: Router
     ) {}
 
@@ -51,7 +53,8 @@ export class ProductFormComponent implements OnInit {
             let product: Product = this.form.value;
             product.features = features;
             console.log(product);
-            this.productService.saveProduct(product).subscribe((newProduct) => {
+            let token = this.authService.getToken()
+            this.productService.saveProduct(product, token).subscribe((newProduct) => {
                 this.router.navigate(['./admin/']);
                 console.log(newProduct);
             });

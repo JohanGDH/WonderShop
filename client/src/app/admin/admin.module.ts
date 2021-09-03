@@ -10,6 +10,7 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductService } from '../core/services/productService/product.service';
+import { AuthService } from '../core/services/authService/auth.service';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ProductService } from '../core/services/productService/product.service'
     ReactiveFormsModule
   ],
   providers: [
-    ProductService
+    ProductService,
+    AuthService
   ]
 })
 export class AdminModule { }

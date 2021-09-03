@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
         this.authService.login({ username: formV.username, password: formV.password}).subscribe(
           data => {
             this.router.navigate(['/admin']);
+            this.authService.setCurrentSession(data)
             console.log(data);
           },
           error => console.log(error)            

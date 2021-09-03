@@ -3,13 +3,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/core/models/product.model';
 import { ProductService } from '../../core/services/productService/product.service';
+import { AuthService } from 'src/app/core/services/authService/auth.service';
 
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css'],
 })
-
 export class ProductEditComponent implements OnInit {
   form: FormGroup;
   name: string;
@@ -17,6 +17,7 @@ export class ProductEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
+    private authService: AuthService,
     private router: Router,
     private activedRoute: ActivatedRoute
   ) {
@@ -28,7 +29,7 @@ export class ProductEditComponent implements OnInit {
       this.name = params.id;
 
       this.productService.getProduct(this.name).subscribe((response) => {
-        const product = response.product[0]
+        const product = response.product[0];
         this.form.patchValue({
           name: product.name,
           price: product.price,
@@ -36,10 +37,8 @@ export class ProductEditComponent implements OnInit {
         });
 
         this.addFeature(product.features);
-
       });
     });
-
   }
 
   buildForm() {
@@ -66,9 +65,14 @@ export class ProductEditComponent implements OnInit {
     if (this.form.valid) {
       let product: Product = this.form.value;
       product.features = features;
-      this.productService.updateProduct(this.name, product).subscribe((newProduct) => {
-        this.router.navigate(['./admin/']);
-      });
+      
+      let token = this.authService.getToken()
+
+      this.productService
+        .updateProduct(this.name, product, token)
+        .subscribe((newProduct) => {
+          this.router.navigate(['./admin/']);
+        });
     }
   }
 
@@ -77,7 +81,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   addFeature(prefeatures?: any) {
-    if(prefeatures) {
+    if (prefeatures) {
       for (const key in prefeatures) {
         const feature = this.formBuilder.group({
           featureName: [key, Validators.required],
@@ -86,7 +90,7 @@ export class ProductEditComponent implements OnInit {
 
         this.featuresForm.push(feature);
       }
-      return
+      return;
     }
 
     const feature = this.formBuilder.group({
@@ -98,6 +102,6 @@ export class ProductEditComponent implements OnInit {
   }
 
   removeFeature(i: number) {
-      this.featuresForm.removeAt(i);
+    this.featuresForm.removeAt(i);
   }
 }
