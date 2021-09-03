@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="saveUser($event)">
+  <h1>Actualizar Producto:</h1>
+  <p>
+    <label>Nombre de usuario:</label><br>
+    <input type="text" formControlName="username">
+  </p>
+  <p>
+    <label>Nombre:</label><br>
+    <input type="text" formControlName="name">
+  </p>
+  <p>
+    <label>COntraseña:</label><br>
+    <input type="password" formControlName="password">
+  </p>
+  <p>
+    <button type="submit">
+      Añadir usuario
+    </button>
+  </p>
+
+</form>
+

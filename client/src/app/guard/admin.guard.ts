@@ -9,27 +9,40 @@ import { map, tap } from 'rxjs/operators';
 })
 export class AdminGuard implements CanActivate {
 
-    
+
   constructor(
     private authService: AuthService,
     private router: Router,
   ) {
-    
+
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let user = this.authService.loadSessionData()
-    let token = this.authService.getToken();        
-    console.log(user);
-    if (!user || !token) {
-      this.authService.removeCurrentSession()
-      return this.router.navigate(['/login']);  
-    }        
-    return true;
-      
+    let token = this.authService.getToken();
     
+      if(user && token) {
+        console.log(typeof this.authService.getToken());
+        console.log(typeof this.authService.loadSessionData().token);
+      }
+
+    if (!user || !token) {
+      this.authService.removeCurrentSession();
+      console.log('NO AUTORIZADO');
+      this.authService.logout();
+      return false
+    }
+
+    if (!(token == user.token)) {
+      this.authService.removeCurrentSession();
+      console.log('NO AUTORIZADO 2');
+      this.authService.logout();      
+      return false;
+    }
+
+    return true;
   }
-  
+
 }

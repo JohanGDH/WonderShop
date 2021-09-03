@@ -20,13 +20,17 @@ export class AuthService {
     private cookies: CookieService,
     private router: Router
   ) {
-    this.url = 'http://localhost:6969/API/login';
+    this.url = 'http://localhost:6969/API';
     this.localStorageService = localStorage;
     this.currentSession = this.loadSessionData();
   }
 
   login(credentials: Partial<User>): Observable<any> {
-    return this.http.post(this.url, credentials).pipe(map(this.extractData));
+    return this.http.post(this.url + '/login', credentials).pipe(map(this.extractData));
+  }
+
+  singUp(user: User, token:string) {
+    return this.http.post(this.url + '/users', user).pipe(map(this.extractData))
   }
 
   private extractData(res: any) {
@@ -49,7 +53,7 @@ export class AuthService {
     this.currentSession = session;
     this.localStorageService.setItem(
       'currentUser',
-      JSON.stringify(session.user)
+      JSON.stringify(session)
     );
     this.cookies.set('token', session.token);
   }
@@ -71,6 +75,7 @@ export class AuthService {
 
   logout(): void {
     this.cookies.delete('token');
+    this.removeCurrentSession();
     this.router.navigate(['/login']);
   }
 }

@@ -35,9 +35,11 @@ export class LoginComponent implements OnInit {
         
         this.authService.login({ username: formV.username, password: formV.password}).subscribe(
           data => {
+            const token = data.token;
             this.router.navigate(['/admin']);
-            this.authService.setCurrentSession(data)
-            console.log(data);
+            this.authService.setCurrentSession(data);
+            this.authService.setToken(token)
+            console.log(data, token);
           },
           error => console.log(error)            
         )        
