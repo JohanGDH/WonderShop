@@ -15,10 +15,6 @@ export class ProductService {
     this.url = 'http://localhost:6969/API';
   }
 
-  testService() {
-    return 'Probando el ProductService';
-  }
-
   listProducts(): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.get(this.url + '/products', { headers });

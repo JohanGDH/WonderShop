@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from './services/productService/product.service';
 import { AuthService } from './services/authService/auth.service';
+import { UserService } from './services/userService/user.service';
+
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -14,7 +16,8 @@ import { CookieService } from 'ngx-cookie-service';
   providers: [
     ProductService,
     AuthService,
-    CookieService
+    CookieService,
+    UserService
   ],
 })
 export class CoreModule { }
