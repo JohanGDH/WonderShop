@@ -24,7 +24,7 @@ const controller = {
             username: user.username,
         };
 
-        const token = jwt.sign(infoForToken, process.env.SECRET_1, { expiresIn: '10h'});
+        const token = jwt.sign(infoForToken, process.env.SECRET_1, { expiresIn: 60 * 5});
 
         res.status(200).send({
             user: {

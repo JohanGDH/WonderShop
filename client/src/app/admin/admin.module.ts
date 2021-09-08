@@ -11,7 +11,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductService } from '../core/services/productService/product.service';
 import { AuthService } from '../core/services/authService/auth.service';
-import { AddUserComponent } from './add-user/add-user/add-user.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { AddUserComponent } from './add-user/add-user/add-user.component';
     ProductEditComponent,
     ProductListComponent,
     DashboardComponent,
-    AddUserComponent
+    AddUserComponent,
+    UsersListComponent
   ],
   imports: [
     CommonModule,
