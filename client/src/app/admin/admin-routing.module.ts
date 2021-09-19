@@ -4,6 +4,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 import { UsersListComponent } from './users-list/users-list.component';
 
 const routes: Routes = [
@@ -26,7 +27,12 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersListComponent
+  },
+  {
+    path: 'edit-user/:id',
+    component: UserEditComponent
   }
+
 ];
 
 @NgModule({

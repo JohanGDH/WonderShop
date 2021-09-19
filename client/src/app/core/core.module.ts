@@ -4,20 +4,21 @@ import { ProductService } from './services/productService/product.service';
 import { AuthService } from './services/authService/auth.service';
 import { UserService } from './services/userService/user.service';
 
-import { HttpClientModule } from '@angular/common/http';
+
 import { CookieService } from 'ngx-cookie-service';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule,
   ],
   providers: [
     ProductService,
     AuthService,
     CookieService,
-    UserService
+    UserService,
+    AuthInterceptor
   ],
 })
 export class CoreModule { }

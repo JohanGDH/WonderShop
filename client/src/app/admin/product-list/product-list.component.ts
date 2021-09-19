@@ -27,9 +27,7 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(name: string) {
-    let token = this.authService.getToken()
-    this.productService.deleteProduct(name, token).subscribe((res) => {
-      console.log(res);
+    this.productService.deleteProduct(name).subscribe((res) => {
 
       if (res) {
         let index = this.products.findIndex((product) => product.name === name);

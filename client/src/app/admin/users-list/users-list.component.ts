@@ -30,7 +30,7 @@ export class UsersListComponent implements OnInit {
 
   deleteUser(id:string) {
     let token = this.authService.getToken()
-    this.userService.deleteUser(id, token).subscribe(
+    this.userService.deleteUser(id).subscribe(
     res => {
       if (res) {
         let index = this.users.findIndex((user) => user.id === id);

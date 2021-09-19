@@ -26,44 +26,24 @@ export class ProductService {
       .pipe(catchError(this.handleError));
   }
 
-  saveProduct(product: Product, token: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    };
+  saveProduct(product: Product) {
 
     return this.http
-      .post(this.url + '/products', product, httpOptions)
+      .post(this.url + '/products', product)
       .pipe(catchError(this.handleError));
   }
 
-  updateProduct(name: string, changes: Partial<Product>, token: string) {
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    };
+  updateProduct(name: string, changes: Partial<Product>) {
 
     return this.http
-      .put(this.url + `/products/${name}`, changes, httpOptions)
+      .put(this.url + `/products/${name}`, changes)
       .pipe(catchError(this.handleError));
   }
 
-  deleteProduct(name: string, token: string) {
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    };
+  deleteProduct(name: string) {
 
     return this.http
-      .delete(`${this.url}/products/${name}`, httpOptions)
+      .delete(`${this.url}/products/${name}`)
       .pipe(catchError(this.handleError));
   }
 

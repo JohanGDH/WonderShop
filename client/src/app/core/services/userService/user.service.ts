@@ -32,7 +32,7 @@ export class UserService {
     .pipe(catchError(this.handleError));
   }
 
-  updateUser(id:string, changes: Partial<User>, token:string) {
+  updateUser(id:string, changes: Partial<User>) {
 
     let idUser = '';
     let session = this.authService.loadSessionData();
@@ -46,29 +46,14 @@ export class UserService {
       return 'El usuario no coincide'
     }
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    };
-
     return this.httpClient
-      .put(`${this.url}${id}`, changes, httpOptions)
+      .put(`${this.url}${id}`, changes)
       .pipe(catchError(this.handleError));
   }
 
-  deleteUser(id:string, token:string) {
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    };
-
+  deleteUser(id:string) {
     return this.httpClient
-      .delete(`${this.url}${id}`, httpOptions)
+      .delete(`${this.url}${id}`,)
       .pipe(catchError(this.handleError));
   }
 

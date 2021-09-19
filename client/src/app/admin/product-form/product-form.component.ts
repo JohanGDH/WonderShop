@@ -35,9 +35,10 @@ export class ProductFormComponent implements OnInit {
 
     saveProduct(event: Event) {
         event.preventDefault();
+        
         let formv = this.form.value;
         let features = {};
-        console.log(formv.features);
+
         if(formv.features) {
             formv.features.map((feature:any) => {
                 Object.defineProperty(features, feature.featureName, {
@@ -52,11 +53,9 @@ export class ProductFormComponent implements OnInit {
         if (this.form.valid) {
             let product: Product = this.form.value;
             product.features = features;
-            console.log(product);
-            let token = this.authService.getToken()
-            this.productService.saveProduct(product, token).subscribe((newProduct) => {
-                this.router.navigate(['./admin/']);
-                console.log(newProduct);
+
+            this.productService.saveProduct(product).subscribe((newProduct) => {
+                this.router.navigate(['./admin/']);                
             });
         }
     }

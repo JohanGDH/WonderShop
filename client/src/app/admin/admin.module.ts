@@ -13,6 +13,7 @@ import { ProductService } from '../core/services/productService/product.service'
 import { AuthService } from '../core/services/authService/auth.service';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UsersListComponent } from './users-list/users-list.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { UsersListComponent } from './users-list/users-list.component';
     ProductListComponent,
     DashboardComponent,
     AddUserComponent,
-    UsersListComponent
+    UsersListComponent,
+    UserEditComponent
   ],
   imports: [
     CommonModule,

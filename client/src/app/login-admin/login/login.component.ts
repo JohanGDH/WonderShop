@@ -10,7 +10,7 @@ import { AuthService } from '../../core/services/authService/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  
+
   form: FormGroup;
   User: Partial<User>;
 
@@ -30,24 +30,16 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       const formV = this.form.value;
       console.log(formV.username, formV.password);
-      
-      try {
-        
-        this.authService.login({ username: formV.username, password: formV.password}).subscribe(
-          data => {
-            const token = data.token;
-            this.router.navigate(['/admin']);
-            this.authService.setCurrentSession(data);
-            this.authService.setToken(token)
-            console.log(data, token);
-          },
-          error => console.log(error)            
-        )        
-      } catch (error) {
-        console.log(error)
-      }
-              
-    }
+
+      this.authService.login({ username: formV.username, password: formV.password}).subscribe(
+        data => {
+          const token = data.token;
+          this.router.navigate(['/admin']);
+          this.authService.setCurrentSession(data);
+          this.authService.setToken(token);
+        },
+      )
+    };
   }
 
   private buildForm() {

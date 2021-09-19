@@ -66,10 +66,8 @@ export class ProductEditComponent implements OnInit {
       let product: Product = this.form.value;
       product.features = features;
       
-      let token = this.authService.getToken()
-
       this.productService
-        .updateProduct(this.name, product, token)
+        .updateProduct(this.name, product)
         .subscribe((newProduct) => {
           this.router.navigate(['./admin/']);
         });
