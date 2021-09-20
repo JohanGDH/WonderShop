@@ -27,36 +27,24 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  getUser(id: string) {
-    return this.httpClient.get(`${this.url}${id}`)
-    .pipe(catchError(this.handleError));
+  getUser(id: string): Observable<any> {
+    return this.httpClient
+      .get(`${this.url}${id}`)
+      .pipe(catchError(this.handleError));
   }
 
-  updateUser(id:string, changes: Partial<User>) {
-
-    let idUser = '';
-    let session = this.authService.loadSessionData();
-    
-    this.getUser(id).subscribe((res:any) => {
-      const user = res.product[0]
-      idUser = user.username;
-    })
-
-    if(!(idUser == session.user.username)) {
-      return 'El usuario no coincide'
-    }
+  updateUser(id: string, changes: Partial<User>) {
 
     return this.httpClient
       .put(`${this.url}${id}`, changes)
       .pipe(catchError(this.handleError));
   }
 
-  deleteUser(id:string) {
+  deleteUser(id: string) {
     return this.httpClient
-      .delete(`${this.url}${id}`,)
+      .delete(`${this.url}${id}`)
       .pipe(catchError(this.handleError));
   }
-
 
   handleError(error: HttpErrorResponse) {
     return throwError('Ups algo salio mal ' + error.name + ' ' + error.message);
