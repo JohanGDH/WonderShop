@@ -19,10 +19,10 @@ export class UsersListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchProduct();
+    this.fetchUsers();
   }
 
-  fetchProduct() {
+  fetchUsers() {
     this.userService.listUsers().subscribe((response) => {
       this.users = response.users;
     });

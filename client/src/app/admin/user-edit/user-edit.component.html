@@ -1,1 +1,30 @@
-<p>user-edit works!</p>
+
+
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="saveUser($event)">
+  <h1>Actualizar Producto:</h1>
+  <p>
+    <label>Nombre de usuario:</label><br>
+    <input type="text" formControlName="username">
+    <span *ngIf="Username.hasError('includes')">includes</span>
+    <span *ngIf="Username.hasError('required')">required</span>
+  </p>
+  <p>
+    <label>Nombre</label><br>
+    <input type="text" formControlName="name">
+  </p>
+  <p>
+    <label>Contraseña:</label><br>
+    <input type="text" formControlName="actualPassword">
+  </p>
+  <p>
+    <label>Contraseña:</label><br>
+    <input type="text" formControlName="newPassword">
+  </p>
+
+  <p>
+    <button type="submit">
+      Actualizar Producto
+    </button>
+  </p>
+
+</form>
