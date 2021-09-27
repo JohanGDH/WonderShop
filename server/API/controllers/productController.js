@@ -1,4 +1,5 @@
 const Product = require('../models/product.model');
+const cloudinary = require('cloudinary');
 
 const controller = {
     test: (req, res) => res.status(200).send({
@@ -53,7 +54,8 @@ const controller = {
         product.name = params.name;
         product.price = params.price;
         product.stock = params.stock;
-        product.features = params.features ;
+        product.features = params.features;
+        product.image = null;
 
         product.save((error, productStored) => {
             if(error) return res.status(500).send({
@@ -83,6 +85,7 @@ const controller = {
         if(body.price) update.price = body.price;
         if(body.stock) update.stock = body.stock;
         if(body.features) update.features = body.features;
+        update.image = null;
 
         Product.findOneAndUpdate({name: productName}, update, { new: true}, (err, productUpdated) => {
             if(err) return res.status(500).send({
@@ -116,7 +119,39 @@ const controller = {
                 Estado : 'Eliminado'
             });
         });
+    },
+
+    uploadImg: async (req, res) => {
+
+        const productID = req.params.id;        
+        const img = req.file;
+        
+        const result = await cloudinary.v2.uploader.upload(img.path);
+
+        Product.findByIdAndUpdate(productID,{
+            image: {
+                title:img.filename,
+                path: result.secure_url,
+                size: img.size,
+                mimeType: img.mimetype
+            }
+        
+        }, {new:true}, (err, productUpdated) => {
+            if(err) return res.status(500).send({
+                message: 'Error al actualizar los datos del producto'
+            });
+
+            if(!productUpdated) return res.status(400).send({
+                message: 'El proyecto ha actualizar no existe'
+            });
+
+            return res.status(200).send({
+                Producto : productUpdated,
+                Estado : 'Actualizado'
+            });
+        });        
     }
+
 };
 
 module.exports = controller;

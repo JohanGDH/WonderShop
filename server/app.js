@@ -4,8 +4,15 @@ const bodyParser = require('body-parser');
 const productRouter = require('./API/routes/productRoutes');
 const userRouter = require('./API/routes/userRouter');
 const loginRouter = require('./API/routes/loginRouter');
+const cloudinary = require('cloudinary');
 
 const app = express();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

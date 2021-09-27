@@ -11,6 +11,12 @@ const ProductSchema = Schema({
     price: Number,
     stock: Number,
     features: Object,
+    image: {
+        title: String,
+        path: String,
+        size: Number,
+        mimeType: String,        
+    },
 });
 
 
