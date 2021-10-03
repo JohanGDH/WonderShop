@@ -14,10 +14,12 @@ const upload = multer({
     storage,
     dest: path.join(__dirname, '../uploads'),
     fileFilter: (req, file ,cb) => {
-
+        
         const extAllowed = /jpeg|jpg|png|tiff|svg/;
         const mymeType = extAllowed.test(file.mimetype);
         const extName = extAllowed.test(path.extname(file.originalname));
+
+        
 
         if(mymeType && extName) {
             return cb(null, true);

@@ -1,5 +1,5 @@
 
-<form [formGroup]="form" (ngSubmit)="saveProduct($event)">
+<form [formGroup]="form" enctype="multipart/form-data" (ngSubmit)="saveProduct($event)">
   <h1>Crear Producto:</h1>
   <p>
       <label>Nombre:</label><br>
@@ -29,6 +29,14 @@
             </div>            
             <button (click)="removeFeature(i)">Eliminar Caracteristica</button>
         </ng-container>        
+  </div>
+  
+  <div>
+       <div *ngIf="filePath && filePath !== ''">
+         <img style="width: 250px;" [src]="filePath" [alt]="form.value.name">
+       </div>
+
+       <input formControlName="image" type="file" accept="image/*" (change)="imagePreview($event)" />
   </div>
   
   <p>

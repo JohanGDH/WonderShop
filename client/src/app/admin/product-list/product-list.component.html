@@ -7,6 +7,9 @@
             <ul>
                 <li>Price: {{product.price}}</li>
                 <li>Stock: {{product.stock}}</li>
+                <div *ngIf="product.image">
+                    <img src="{{product.image.path}}" alt="{{product.image.title}}" style="width: 250px;" >
+                </div>
                 <ng-container *ngFor="let features of product.features | keyvalue">
                     <li>
                         {{features.key | uppercase}}: {{features.value}}

@@ -85,7 +85,6 @@ const controller = {
         if(body.price) update.price = body.price;
         if(body.stock) update.stock = body.stock;
         if(body.features) update.features = body.features;
-        update.image = null;
 
         Product.findOneAndUpdate({name: productName}, update, { new: true}, (err, productUpdated) => {
             if(err) return res.status(500).send({
@@ -126,6 +125,10 @@ const controller = {
         const productID = req.params.id;        
         const img = req.file;
         
+        if(!img) return res.status(400).send({
+            message: 'No se ha enviado una imagen'
+        });
+                
         const result = await cloudinary.v2.uploader.upload(img.path);
 
         Product.findByIdAndUpdate(productID,{

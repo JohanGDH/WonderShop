@@ -47,6 +47,19 @@ export class ProductService {
       .pipe(catchError(this.handleError));
   }
 
+  uploadImage(id: string, image: File) {
+    
+    
+    let fd = new FormData();
+
+    fd.append('image', image);
+    console.log(image)
+    return this.http
+      .post(this.url + `/upload/${id}`, fd)
+      .pipe(catchError(this.handleError));
+  }
+  
+  
   handleError(error: HttpErrorResponse) {
     return throwError('Ups algo salio mal ' + error.name + ' ' + error.message);
   }
