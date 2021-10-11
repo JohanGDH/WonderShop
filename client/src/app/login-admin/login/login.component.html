@@ -1,12 +1,23 @@
-<form [formGroup]="form" (ngSubmit)="login($event)">
-  <h1>Iniciar Sesión:</h1>
-  <p>
-    <label>Usuario:</label><br>
-    <input type="text" formControlName="username">
-  </p>
-  <p>
-    <label>Constraseña:</label><br>
-    <input type="text" formControlName="password">
-  </p>
-  <button type="submit">Login</button>
-</form>
+<div class="container">
+  <mat-card  class="login-container">
+    <form [formGroup]="form" (ngSubmit)="login($event)">
+      <div class="form-container">
+        <h1>Iniciar Sesión</h1>
+        <mat-form-field>
+          <mat-label>Usuario</mat-label>
+          <input matInput type="text" formControlName="username" placeholder="Escribe tu usuario">
+          <mat-icon matSuffix>person_outline</mat-icon>
+        </mat-form-field>
+
+        <br>
+        <mat-form-field>
+          <mat-label>Constraseña</mat-label>
+          <input matInput type="text" formControlName="password" placeholder="Escribe tu contraseña">
+          <mat-icon matSuffix>lock_outline</mat-icon>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button  color="primary" type="submit">Login</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
