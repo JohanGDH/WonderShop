@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialModule } from '../material/material.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { NavComponent } from './nav/nav.component';
 import { ProductFormComponent } from './product-form/product-form.component';
@@ -25,17 +26,15 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     DashboardComponent,
     AddUserComponent,
     UsersListComponent,
-    UserEditComponent
+    UserEditComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     CoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule,
   ],
-  providers: [
-    ProductService,
-    AuthService
-  ]
+  providers: [ProductService, AuthService],
 })
-export class AdminModule { }
+export class AdminModule {}
