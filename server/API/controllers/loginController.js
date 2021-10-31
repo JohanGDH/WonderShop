@@ -44,45 +44,81 @@ const controller = {
 
     sendRecoveryEmail: async (req, res) => {
 
-		const { email } = req.body
+      const { email } = req.body
 
-		const user = await User.findOne({ username: email });
+      const user = await User.findOne({ username: email });
 
-		if(!user) {
-			return res.status(401).send({ message: 'Usurio no válido '});
-		}
+      if(!user) {
+        return res.status(401).send({ message: 'Usurio no válido '});
+      }
 
-        const payload = { sub: user.username };
-        const token = jwt.sign(payload, process.env.SECRET_1, {
-          expiresIn: '30m',
+      const payload = { sub: user.username };
+      const token = jwt.sign(payload, process.env.SECRET_1, {
+        expiresIn: '30m',
+      });
+
+      User.findOneAndUpdate({username: email}, {recoveryToken: token}, {new: true}, (err, user) => {
+          if(err || !user) return res.status(500).send({ message: "Error en el servidor" + err})
+      })
+
+      const link = `http://localhost:4200/recovery?token=${token}`
+
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.SMTP_ACCOUNT,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
+
+      await transporter.sendMail({
+        from: 'jgiandh46@gmail.com',
+        to: user.username,
+        subject: `Hello ${user.name}, este correo es para recuperar tu contraseña ✔`,
+        html: `<b>Ingresa a este <a href="${link}">link</a> para recuperar tu contraseña</b>
+        <br>
+          Enviado el ${new Date()}
+        `
+      });
+
+      return res.status(404).send({ message: `Email enviado a ${user.username}`})
+    },
+
+    changePassword: async (req, res) => {
+
+      const { newPassword, token } = req.body;
+
+      const payload = jwt.verify(token, process.env.SECRET_1);
+      
+      const user = await User.findOne({ username: payload.sub });
+
+      console.log(payload, user);
+
+      if(token !== user.recoveryToken) {
+        return res.status(401).send({ message: "Unauthorized"})
+      }
+
+      const passwordHash = await bcrypt.hash(newPassword, 10);
+
+      User.findOneAndUpdate({ username: user.username }, { recoveryToken: null, passwordHash }, { new: true }, (err, userUpdated)=> {
+        if (err)
+          return res.status(500).send({
+            message: 'Error al actualizar los datos del usuario',
+          });
+
+        if (!userUpdated)
+          return res.status(400).send({
+            message: 'El usuario ha actualizar no existe',
+          });
+
+        return res.status(200).send({
+          Usuario: userUpdated,
+          Estado: 'Actualizado',
         });
+      });
 
-        User.findOneAndUpdate({username: email}, {recoveryToken: token}, {new: true}, (err, user) => {
-            if(err || !user) return res.status(500).send({ message: "Error en el servidor" + err})
-        })
-            
-        const link = `http://localhost:4200/recovery?token=${token}`        
-
-        const transporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-            user: process.env.SMTP_ACCOUNT,
-            pass: process.env.SMTP_PASSWORD,
-          },
-        });
-
-        await transporter.sendMail({
-          from: 'jgiandh46@gmail.com',
-          to: user.username,
-          subject: `Hello ${user.name}, este correo es para recuperar tu contraseña ✔`,
-          html: `<b>Ingresa a este <a href="${link}">link</a> para recuperar tu contraseña</b>
-          <br>
-            Enviado el ${new Date()}
-          `
-        });
-        return res.status(404).send({ message: `Email enviado a ${user.username}`})
     }
 };
 

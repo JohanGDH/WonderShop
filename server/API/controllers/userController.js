@@ -103,21 +103,20 @@ const controller = {
         if (body.name) update.name = body.name;
         if (body.password) update.passwordHash = passwordHash;
 
-        User.findByIdAndUpdate(UserId, update, { new: true }, (err, productUpdated) => {
-                
+        User.findByIdAndUpdate(UserId, update, { new: true }, (err, userUpdated) => {                
             if (err)
                 return res.status(500).send({
                     message: 'Error al actualizar los datos del usuario',
                 });
 
-            if (!productUpdated)
-                return res.status(400).send({
-                    message: 'El usuario ha actualizar no existe',
-                });
+            if (!userUpdated)
+              return res.status(400).send({
+                message: 'El usuario ha actualizar no existe',
+              });
 
             return res.status(200).send({
-                Usuario: productUpdated,
-                Estado: 'Actualizado',
+              Usuario: userUpdated,
+              Estado: 'Actualizado',
             });
         });
     },
