@@ -33,6 +33,13 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  saveUser(user: User) {
+    return this.httpClient
+      .post(`${this.url}`, user)
+      .pipe(catchError(this.handleError))
+
+  }
+
   updateUser(id: string, changes: Partial<User>) {
 
     return this.httpClient

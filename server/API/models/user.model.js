@@ -11,12 +11,20 @@ const UserSchema = Schema({
     },
     name: String,
     passwordHash: String,
+    recoveryToken: {
+        type: String,
+        default: null
+    },
     products: [
         {
             type: Schema.Types.ObjectId,
             ref: "Product",
         },
     ],
+    role: {
+        type: String,
+        default: 'Trabajador'
+    },
 });
 
 UserSchema.set('toJSON', {
@@ -25,6 +33,7 @@ UserSchema.set('toJSON', {
         delete retornedObject._id;
         delete retornedObject.__v;
         delete retornedObject.passwordHash;
+        delete retornedObject.recoveryToken;
     }
 });
 

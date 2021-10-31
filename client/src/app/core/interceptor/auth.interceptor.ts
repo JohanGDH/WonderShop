@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { AuthService  } from '../services/authService/auth.service';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Session } from '../models/session.model';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -13,13 +14,18 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
 
-  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     
     const token:string = this.authService.getToken();
+    const session: Session = this.authService.loadSessionData();
     let request = req;
 
-    if(token) {
-      request = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    if(token && session) {
+      request = req.clone(
+        { 
+          setHeaders: { Authorization: `Bearer ${token}` },
+          body:{ ...req.body, 'ActiveUser': session.user.username},
+        });
     }
 
     return next
