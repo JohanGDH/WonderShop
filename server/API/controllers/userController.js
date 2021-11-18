@@ -72,6 +72,7 @@ const controller = {
         user.name = params.name;
         user.passwordHash = passwordHash;
         user.products = params.products;
+        user.role = params.role;
 
         user.save((error, userStored) => {
             if (error)
@@ -102,6 +103,7 @@ const controller = {
         if (body.username) update.username = body.username;
         if (body.name) update.name = body.name;
         if (body.password) update.passwordHash = passwordHash;
+        if (body.role) update.role = body.role;
 
         User.findByIdAndUpdate(UserId, update, { new: true }, (err, userUpdated) => {                
             if (err)

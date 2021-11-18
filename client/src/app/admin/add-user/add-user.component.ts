@@ -23,6 +23,7 @@ export class AddUserComponent implements OnInit {
 
   saveUser(event: Event) {
     event.preventDefault();
+    console.log(this.form.value)
     if (this.form.valid) {
       let user: User = this.form.value;
       
@@ -47,6 +48,7 @@ export class AddUserComponent implements OnInit {
       username: ['', [Validators.required]],
       name: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      role: ['Trabajador',]
     });
   }
 }

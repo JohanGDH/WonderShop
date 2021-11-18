@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const nodemailer = require('nodemailer');
-
+const roleValidator = require('../middleware/roleValidator')
 
 const controller = {
 
@@ -18,6 +18,13 @@ const controller = {
         if(!(user && passwordCorrect)) {
             return res.status(401).send({
                 message: 'Usuario o contraseña inválido '
+            });
+        }
+
+        if(user.role != "Administrador" && user.role != "Trabajador") {
+          
+            return res.status(401).send({
+              message: 'No tiene acceso',
             });
         }
 

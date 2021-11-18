@@ -11,8 +11,20 @@ const roleValidator = {
             return response.status(401).send({ message: 'No está autorizado' })
         }
 
+       next();
+    },
+
+    workkerCheck: async (request, response, next) => {
+        const { body } = request;
+        const { ActiveUser } = body;
+        const user = await User.findOne({ username: ActiveUser });
+
+        if (user.role != 'Trabajador' || !user.role) {
+        return response.status(401).send({ message: 'No está autorizado' });
+        }
+        
         next();
-    }
+    },
 }
 
 module.exports = roleValidator;
