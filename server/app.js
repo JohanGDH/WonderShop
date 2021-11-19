@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const productRouter = require('./API/routes/productRoutes');
 const userRouter = require('./API/routes/userRouter');
 const loginRouter = require('./API/routes/loginRouter');
+const cartRouter = require('./API/routes/shopCartRouter');
 const cloudinary = require('cloudinary');
 
 const app = express();
@@ -34,5 +35,6 @@ app.use(
 app.use('/API', productRouter);
 app.use('/API/users', userRouter);
 app.use('/API/login', loginRouter);
+app.use('/API/cart', cartRouter);
 
 module.exports = app;
