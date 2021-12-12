@@ -3,8 +3,6 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../../models/user.model';
-import { Session } from '../../models/session.model';
-import { AuthService } from '../authService/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +13,6 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
   ) {
     this.url = 'http://localhost:6969/API/users/';
   }

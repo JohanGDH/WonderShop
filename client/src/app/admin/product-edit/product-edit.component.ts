@@ -81,17 +81,19 @@ export class ProductEditComponent implements OnInit {
 					(newProduct:any) => {
 						const ProductStored = newProduct.Producto;
 
-						if(this.file) {console.log(this.file); this.productService.uploadImage(ProductStored.id, this.file)
-							.subscribe(
-								(data) => {
-									console.log(data);
-									this.router.navigate(['./admin/']);
-								},
-								(error) => {
-									console.error(error);
-									window.location.reload();
-								}
-							)}
+						if(this.file) {
+							
+							this.productService.uploadImage(ProductStored.id, this.file)
+								.subscribe(
+									(data) => {
+										console.log(data);
+										this.router.navigate(['./admin/']);
+									},
+									(error) => {
+										console.error(error);
+										window.location.reload();
+									}
+						)}
 						else this.router.navigate(['./admin/']);
 					},
 					error => {

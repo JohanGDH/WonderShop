@@ -7,6 +7,7 @@ import { UserService } from './services/userService/user.service';
 
 import { CookieService } from 'ngx-cookie-service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { ClientService } from './services/clientService/client-service.service';
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     AuthService,
     CookieService,
     UserService,
-    AuthInterceptor
+    AuthInterceptor,
+    ClientService
   ],
 })
 export class CoreModule { }

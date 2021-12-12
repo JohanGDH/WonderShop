@@ -1,0 +1,12 @@
+<h1>Restablece tu contraseña</h1>
+
+<form [formGroup]="form" action="" (ngSubmit)="onSubmit($event)">
+    <label for="password">Nueva contraseña</label>
+    <input formControlName="newPassword" type="text" name="password" id="">
+    
+    <label for="rpassword">Repite tu contraseña</label>
+    <input formControlName="repeatPassword" type="text" name="rpassword" id="">
+    
+    <button type="submit">Enviar</button>
+</form>
+

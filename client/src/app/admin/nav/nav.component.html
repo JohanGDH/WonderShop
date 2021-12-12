@@ -11,14 +11,16 @@
         <mat-icon>add</mat-icon>
         Crear Producto        
    		</a>
-      <a mat-list-item href="#" routerLink="/admin/users">
-        <mat-icon>people</mat-icon>
-        Usuarios
-    	</a>
-      <a mat-list-item href="#" routerLink="/admin/add-user">
-        <mat-icon>person_add</mat-icon>
-        Añadir usuario
-    	</a>
+       <ng-container *ngIf="user.role == 'Administrador'">
+        <a mat-list-item href="#" routerLink="/admin/users">
+          <mat-icon>people</mat-icon>
+          Usuarios
+        </a>
+        <a mat-list-item href="#" routerLink="/admin/add-user">
+          <mat-icon>person_add</mat-icon>
+          Añadir usuario
+        </a>
+       </ng-container>             
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

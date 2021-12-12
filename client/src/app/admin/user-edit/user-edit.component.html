@@ -1,7 +1,7 @@
 
 
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveUser($event)">
-  <h1>Actualizar Producto:</h1>
+  <h1>Actualizar Datos de Usuario</h1>
   <p>
     <label>Nombre de usuario:</label><br>
     <input type="text" formControlName="username">
@@ -11,10 +11,6 @@
   <p>
     <label>Nombre</label><br>
     <input type="text" formControlName="name">
-  </p>
-  <p>
-    <label>Contraseña:</label><br>
-    <input type="text" formControlName="actualPassword">
   </p>
   <p>
     <label>Contraseña:</label><br>
@@ -28,3 +24,16 @@
   </p>
 
 </form>
+
+<form action="" [formGroup]="form2" (ngSubmit)="sendRecoveryEmail($event)">
+  <h2>Recuperar contraseña</h2>
+
+  <p>
+    Deberás de proporcionarnos el correo electronico asociado a tu cuenta, para poder enviarte el link de recuperación
+  </p>
+  <label for="">Correo Electronico:</label>
+  <input formControlName="email" type="text">
+
+  <button (click)="sendRecoveryEmail($event)">Enviar</button>
+</form>
+ 

@@ -7,11 +7,13 @@ import { LoginAdminRoutingModule } from './login-admin-routing.module';
 import { LoginComponent } from './login/login.component';
 import { CoreModule } from '../core/core.module';
 import { AuthService } from '../core/services/authService/auth.service';
+import { RecoveryComponent } from './recovery/recovery.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
+    RecoveryComponent,
   ],
   imports: [
     CommonModule,

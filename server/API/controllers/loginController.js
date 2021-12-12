@@ -45,10 +45,6 @@ const controller = {
         });
     },
 
-    recoveryPassword: () => {
-
-    },
-
     sendRecoveryEmail: async (req, res) => {
 
       const { email } = req.body
@@ -68,7 +64,7 @@ const controller = {
           if(err || !user) return res.status(500).send({ message: "Error en el servidor" + err})
       })
 
-      const link = `http://localhost:4200/recovery?token=${token}`
+      const link = `http://localhost:4200/recovery/${token}`
 
       const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -90,7 +86,7 @@ const controller = {
         `
       });
 
-      return res.status(404).send({ message: `Email enviado a ${user.username}`})
+      return res.status(202).send({ message: `Email enviado a ${user.username}`})
     },
 
     changePassword: async (req, res) => {

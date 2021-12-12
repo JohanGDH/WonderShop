@@ -25,17 +25,21 @@ export class AuthService {
     this.currentSession = this.loadSessionData();
   }
 
-  login(credentials: Partial<User>): Observable<any> {
-    return this.http.post(this.url + '/login', credentials).pipe(map(this.extractData));
-  }
-
-  singUp(user: User, token:string) {
-    return this.http.post(this.url + '/users', user).pipe(map(this.extractData))
-  }
-
   private extractData(res: any) {
     let body = res;
     return body;
+  }
+
+  login(credentials: Partial<User>): Observable<any> {
+    return this.http
+      .post(this.url + '/login', credentials)
+      .pipe(map(this.extractData));
+  }
+
+  singUp(user: User, token: string) {
+    return this.http
+      .post(this.url + '/users', user)
+      .pipe(map(this.extractData));
   }
 
   setToken(token: string) {
@@ -51,10 +55,7 @@ export class AuthService {
   }
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    this.localStorageService.setItem(
-      'currentUser',
-      JSON.stringify(session)
-    );
+    this.localStorageService.setItem('currentUser', JSON.stringify(session));
     this.cookies.set('token', session.token);
   }
 
@@ -77,5 +78,9 @@ export class AuthService {
     this.cookies.delete('token');
     this.removeCurrentSession();
     this.router.navigate(['/login']);
+  }
+
+  changePassword(newPassword:string, token:string): Observable<any> {
+    return this.http.put(`${this.url}/login/change-password`, {newPassword, token});
   }
 }

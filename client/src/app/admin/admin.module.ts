@@ -35,6 +35,9 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     ReactiveFormsModule,
     MaterialModule,
   ],
-  providers: [ProductService, AuthService],
+  providers: [
+    ProductService, 
+    AuthService,    
+  ],
 })
 export class AdminModule {}
