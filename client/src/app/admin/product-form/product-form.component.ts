@@ -59,7 +59,7 @@ export class ProductFormComponent implements OnInit {
             this.productService.saveProduct(product)
             .subscribe(
                 (newProduct:any) => {
-                    const ProductStored = newProduct.Producto;
+                    const ProductStored = newProduct.Producto;                    
                     this.productService.uploadImage(ProductStored.id, this.file)
                         .subscribe(
                             data => {

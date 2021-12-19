@@ -75,7 +75,8 @@ export class ProductEditComponent implements OnInit {
 
 			product.features = features;
 			console.log(formv.features, formv.features.length);
-
+			
+			 console.log(this.file);
 			this.productService.updateProduct(this.name, product)
 				.subscribe(
 					(newProduct:any) => {
@@ -85,13 +86,11 @@ export class ProductEditComponent implements OnInit {
 							
 							this.productService.uploadImage(ProductStored.id, this.file)
 								.subscribe(
-									(data) => {
-										console.log(data);
+									(data) => {																				
 										this.router.navigate(['./admin/']);
 									},
 									(error) => {
 										console.error(error);
-										window.location.reload();
 									}
 						)}
 						else this.router.navigate(['./admin/']);

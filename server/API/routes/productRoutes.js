@@ -10,7 +10,7 @@ router.get('/products', ProductController.listProducts);
 router.get('/products/:name?', ProductController.getProduct);
 router.post('/products', userAuth, ProductController.saveProduct);
 router.post('/upload/:id', multerMiddleware, ProductController.uploadImg);
-router.put('/products/:name', userAuth, ProductController.updateProduct);
+router.put('/products/:name', ProductController.updateProduct);
 router.delete('/products/:name', userAuth, ProductController.deleteProduct);
 
 module.exports = router;

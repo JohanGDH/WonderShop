@@ -20,12 +20,20 @@ export class AuthInterceptor implements HttpInterceptor {
     const session: Session = this.authService.loadSessionData();
     let request = req;
 
-    if(token && session) {
-      request = req.clone(
-        { 
-          setHeaders: { Authorization: `Bearer ${token}` },
-          body:{ ...req.body, 'ActiveUser': session.user.username},
-        });
+    
+    if(req.url.includes('upload')) {
+      console.log("JIJIJIJA");
+      return next.handle(req);
+    } 
+
+    if (token && session) {
+      if (req.body) console.log(req.body);
+
+      request = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+        body: { ...req.body, ActiveUser: session.user.username },
+      });
+      
     }
 
     return next
