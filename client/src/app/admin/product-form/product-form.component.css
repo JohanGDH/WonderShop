@@ -1,0 +1,27 @@
+form {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-card {
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+mat-form-field {
+    width: 190px;
+}
+
+#upload-button {
+    display: none;
+}
+
+.image_container {
+    width: 300px;
+}
+
+.image_container>div {
+    width: 90%;
+    margin: 0 auto ;
+}

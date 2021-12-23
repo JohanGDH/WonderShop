@@ -1,53 +1,86 @@
+<mat-card>
+  <form [formGroup]="form" enctype="multipart/form-data" (ngSubmit)="saveProduct($event)">
+  
+  <div class="inputs_container">
+    <h1>Crear Producto:</h1>
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <br>
 
-<form [formGroup]="form" enctype="multipart/form-data" (ngSubmit)="saveProduct($event)">
-  <h1>Crear Producto:</h1>
-  <p>
-      <label>Nombre:</label><br>
-    <input type="text" formControlName="name">
-  </p>
-  <p>
-      <label>Precio:</label><br>
-    <input type="number" formControlName="price">
-  </p>
-  <p>
-      <label>Stock:</label><br>
-    <input type="number" formControlName="stock">
-  </p>
-  <div formArrayName="features">
-        <ng-container *ngFor="let feature of features.controls; let i = index;">
-            Caracteristicas
+    <mat-form-field>
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" formControlName="price">
+       <mat-icon matSuffix>attach_money</mat-icon>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+      <mat-label>Stock</mat-label>
+      <input matInput type="number" formControlName="stock">
+    </mat-form-field>
+    
+    <div formArrayName="features">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Caracteristicas
+            </mat-panel-title>
+            <mat-panel-description>
+              Las características del producto van aquí
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+           <p>
+             <button (click)="addFeature()">
+               + Añadir Caracteristica
+             </button>
+           </p>
+
+          <ng-container *ngFor="let feature of features.controls; let i = index;">                    
             <div [formGroupName]="i" >
-                <p>
-                    <label>Nombre:</label><br>
-                    <input formControlName="featureName" type="text">
-                </p>
+              <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="featureName" type="text">
+              </mat-form-field>
+              <br>
 
-                <p>
-                    <label> Valor:</label><br>
-                    <input formControlName="featureValue" type="text">
-                </p>
-            </div>            
-            <button (click)="removeFeature(i)">Eliminar Caracteristica</button>
-        </ng-container>        
-  </div>
-  
-  <div>
-       <div *ngIf="filePath && filePath !== ''">
-         <img style="width: 250px;" [src]="filePath" [alt]="form.value.name">
-       </div>
+              <mat-form-field>
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="featureValue" type="text">
+              </mat-form-field>
+              <br>
+            </div>
+          
+          <button (click)="removeFeature(i)">Eliminar Caracteristica</button>
+        </ng-container>
 
-       <input formControlName="image" type="file" accept="image/*" (change)="imagePreview($event)" />
-  </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
   
-  <p>
-      <button (click)="addFeature()">
-          + Añadir Caracteristica
-      </button>
-  </p>
-  <p>
+   
+    <p>
       <button (click)="saveProduct($event)">
-          Crear Producto
+        Crear Producto
       </button>
-  </p>
+    </p>
+  </div>
 
-</form>
+  <div class="image_container">
+    <div>
+      <h2>Imagen del producto</h2>
+
+      <label for="upload-button">
+        <div>
+          <img style="width: 100%;" [src]="filePath || '../../../assets/images/No-Image-Placeholder.png'"
+            [alt]="form.value.name">
+        </div>
+      </label>
+      <input id="upload-button" formControlName="image" type="file" accept="image/*" (change)="imagePreview($event)" />
+    </div>    
+  </div>
+
+  </form>
+</mat-card>

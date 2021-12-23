@@ -25,6 +25,11 @@ mat-sidenav-container, mat-sidenav-content {
   overflow: initial !important;
 }
 
+
+.sidenav-container {
+    height: 100%;
+}
+
 .toolbar {
     position: sticky;
     top: 0px;
@@ -75,4 +80,6 @@ mat-sidenav-container, mat-sidenav-content {
 
 .contain {
     padding: 12px;
+    max-width: 95%;
+    margin: 0 auto;
 }

@@ -1,33 +1,41 @@
-<p>Lista de productos</p>
-
 <div>
-    <ng-container *ngFor="let product of products" >
-        <div>
-            <h2>{{product.name}}</h2>
-            <ul>
-                <li>Price: {{product.price}}</li>
-                <li>Stock: {{product.stock}}</li>
-                <div *ngIf="product.image">
-                    <img src="{{product.image.path}}" alt="{{product.image.title}}" style="width: 250px;" >
+
+    <h1>Lista de productos</h1>
+    
+    <div class="container">
+        <ng-container *ngFor="let product of products" >
+            
+        <mat-card class="mat-card">
+            <mat-card-header>
+                    <mat-card-title>
+                        <h2>{{product.name}}</h2>
+                    </mat-card-title>
+            </mat-card-header>
+            <div>
+                <div class="box-image" >
+                    <img class="image" *ngIf="product.image" mat-card-image src="{{product.image.path}}" alt="{{product.image.title}}"
+                    style="width: 250px;">
                 </div>
-                <ng-container *ngFor="let features of product.features | keyvalue">
-                    <li>
-                        {{features.key | uppercase}}: {{features.value}}
-                    </li>
-                </ng-container>                
-            </ul>
-            <button (click)="deleteProduct(product.name)">
-                Eliminar
-            </button>
-            <button [routerLink]="['/admin/edit',product.name]">
-              Editar
-            </button>
-        </div>    
-    
-    </ng-container>
-    
-    
+                
+                <mat-card-content>
+                    <ul>
+                        <li>Price: {{product.price}}</li>
+                        <li>Stock: {{product.stock}}</li>
+                    </ul>
+                </mat-card-content>
+                
+                <mat-card-actions>                    
+                    <button mat-stroked-button color="warn" (click)="deleteProduct(product.name)">
+                        Eliminar
+                    </button>
+                    <button mat-stroked-button [routerLink]="['/admin/edit',product.name]">
+                        Editar
+                    </button>
+                </mat-card-actions>
+            </div>
+            
+        </mat-card>
+
+        </ng-container>
+    </div>
 </div>
-<hr>
-<button routerLink="/admin/add-product">Crear producto</button>
-<button routerLink="/admin/users">Usuarios</button>
