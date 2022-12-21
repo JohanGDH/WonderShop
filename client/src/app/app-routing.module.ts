@@ -5,12 +5,12 @@ import { AdminGuard } from './guard/admin.guard';
 const routes: Routes = [
   {
     path:'admin',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     loadChildren: ()=> import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
-    path: '',
-    loadChildren: ()=> import('./login-admin/login-admin.module').then(m => m.LoginAdminModule),
+  path: '',
+    loadChildren: ()=> import('./login-admin/login-admin.module').then(m => m.LoginAdminModule),  
   }
 
 ];

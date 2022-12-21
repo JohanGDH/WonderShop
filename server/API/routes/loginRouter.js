@@ -8,3 +8,4 @@ router.post('/recovery', loginController.sendRecoveryEmail);
 router.put('/change-password', loginController.changePassword);
 
 module.exports = router;
+

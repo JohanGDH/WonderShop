@@ -18,12 +18,12 @@ const controller = {
             .exec((err, users) => {
                 if (err)
                     return res.status(500).send({
-                        message: 'Error al listar los productos',
+                        message: 'Error al listar los usuarios',
                     });
 
                 if (!users)
                     return res.status(404).send({
-                        message: 'No hay productos que listar',
+                        message: 'No hay usuarios que listar',
                     });
 
                 return res.status(200).send({ users });
@@ -48,7 +48,7 @@ const controller = {
 
             if (user.length < 1)
                 return res.status(404).send({
-                    message: 'Producto no encontrado',
+                    message: 'Usuario no encontrado',
                 });
 
             return res.status(200).send({
@@ -65,6 +65,11 @@ const controller = {
         const user = new User();
         const params = req.body;
 
+        console.log(params, req.body);
+        
+        if (!params.password) return res.status(500).send({
+            message: "No se lleno el formulario",
+        })
         const saltRounds = 10;
         const passwordHash = await bcrypt.hash(params.password, saltRounds);     
 
