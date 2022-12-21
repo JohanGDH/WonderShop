@@ -33,7 +33,7 @@ const controller = {
             username: user.username,
         };
 
-        const token = jwt.sign(infoForToken, process.env.SECRET_1, { expiresIn: "5h"});
+        const token = jwt.sign(infoForToken, "estrellita", { expiresIn: "5h"});
 
         res.status(200).send({
             user: {
@@ -56,7 +56,7 @@ const controller = {
       }
 
       const payload = { sub: user.username };
-      const token = jwt.sign(payload, process.env.SECRET_1, {
+      const token = jwt.sign(payload, "estrellita", {
         expiresIn: '30m',
       });
 
@@ -71,8 +71,8 @@ const controller = {
         port: 465,
         secure: true,
         auth: {
-          user: process.env.SMTP_ACCOUNT,
-          pass: process.env.SMTP_PASSWORD,
+          user: 'elizahersilla@gmail.com',
+          pass: 'roqabhluwovqpppt',
         },
       });
 
@@ -93,7 +93,7 @@ const controller = {
 
       const { newPassword, token } = req.body;
 
-      const payload = jwt.verify(token, process.env.SECRET_1);
+      const payload = jwt.verify(token, "estrellita");
       
       const user = await User.findOne({ username: payload.sub });
 
